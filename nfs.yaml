@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs
+provisioner: 192.168.1.16/data_nfs
+parameters:
+  server: 192.168.1.16
+  path: /data_nfs
+  readOnly: "false"
