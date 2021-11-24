@@ -41,6 +41,8 @@ spec:
         - name: rpc
           containerPort: 12320
         env:
+        - name: SPARK_SUBMIT_OPTIONS
+          value: "--master spark://spark-master-svc:7077"
         - name: POD_UID
           valueFrom:
             fieldRef:
