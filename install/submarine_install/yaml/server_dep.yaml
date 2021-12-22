@@ -21,3 +21,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+        env:
+          - name: SUBMARINE_SERVER_PORT
+            value: "8080"    

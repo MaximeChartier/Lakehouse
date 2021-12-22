@@ -80,3 +80,22 @@ provider "registry.terraform.io/mrparkers/keycloak" {
     "zh:f4aa1c1b12a7f863afbb8b5793fd46e0cbb385d5d6c44dc39fc067e777a621bb",
   ]
 }
+
+provider "registry.terraform.io/petoju/mysql" {
+  version     = "3.0.7"
+  constraints = "3.0.7"
+  hashes = [
+    "h1:EcYoA4uSr1/ZRh4HTNaJjEQqy5mpPWCPEEKrTG0eENU=",
+    "zh:0e66c4cd8b0a51a47e1d5e1a568c4c94595ea13be61d92b9f4479e82a28a9bd3",
+    "zh:1eaa48f23b2b12a3c7f306817a557f438f067b6149c85affe3270ecdb1e17b45",
+    "zh:411f581b106d1b5f4a2b7c0182ac8d400a0f3b1c89d2e3b6d86992810a55bb14",
+    "zh:53472870dd878f3408a78a25adbadea62cae6e62a75093b9ad43ee57f9812eec",
+    "zh:913d4d023c2b6d550b943065721de6ed8188e6ac9cb2bf0f060b5c8deb421c9d",
+    "zh:9222546029cec018b5b011ef477bd5d75a9d1f1d1338ea347d804cf352f8484a",
+    "zh:94bc9ea4b922530a85f0a556adfff0f53a7ef91f15a88b5d869a876d6cf34cd1",
+    "zh:99d38365894e26b74ac2fe5e614fde74570dd878c8d00c53f46bbf84d0f5497b",
+    "zh:af411ab9a78c2bf509aef94c9984cdce324ca9ee5b6d4c2db7a762605c9ca888",
+    "zh:d066e2ef1d2067958e6012319ef41d76a0cd06c5a737072070138a94ba0bc75c",
+    "zh:ebd35928066f04c21380cbaf755767ea7214e9e427bd80c59c9cd97d2239ec24",
+  ]
+}

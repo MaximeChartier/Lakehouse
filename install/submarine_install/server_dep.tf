@@ -33,6 +33,11 @@ resource "kubernetes_deployment" "submarine_server" {
             container_port = 8080
           }
 
+          env {
+            name  = "SUBMARINE_SERVER_PORT"
+            value = "8080"
+          }
+
           image_pull_policy = "Always"
         }
       }

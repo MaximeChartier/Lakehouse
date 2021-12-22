@@ -10,7 +10,9 @@ resource "kubernetes_namespace" "keycloak" {
   metadata {
     name = "keycloak"
     annotations = {}
-    labels = {}
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }
 
@@ -18,6 +20,8 @@ resource "kubernetes_namespace" "ldap" {
   metadata {
     name = "ldap"
     annotations = {}
-    labels = {}
+    labels = {
+      istio-injection = "enabled"
+    }
   }
 }

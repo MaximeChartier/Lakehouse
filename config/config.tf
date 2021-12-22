@@ -27,3 +27,7 @@ module "keycloak_config" {
   source = "./keycloak_config"
   password = "admin"
 }
+
+module "mariadb_config" {
+  source = "./mariadb_config"
+}
