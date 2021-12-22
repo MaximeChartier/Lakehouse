@@ -25,6 +25,14 @@ resource "kubernetes_deployment" "submarine_server" {
       }
 
       spec {
+        volume {
+          name = "config"
+
+          config_map {
+            name = "submarine-server-config"
+          }
+        }
+
         container {
           name  = "server"
           image = "apache/submarine:server-0.6.0"
@@ -36,6 +44,13 @@ resource "kubernetes_deployment" "submarine_server" {
           env {
             name  = "SUBMARINE_SERVER_PORT"
             value = "8080"
+          }
+
+          volume_mount {
+            name       = "config"
+            read_only  = true
+            mount_path = "/opt/submarine-current/conf/submarine-site.xml"
+            sub_path   = "submarine-site.xml"
           }
 
           image_pull_policy = "Always"

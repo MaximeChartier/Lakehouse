@@ -43,5 +43,5 @@ module "mariadb_install" {
 
 module "submarine_install" {
   source = "./submarine_install"
-  depends_on = [module.kube]
+  depends_on = [module.kube, module.mariadb_install]
 }

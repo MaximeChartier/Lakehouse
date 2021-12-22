@@ -31,3 +31,7 @@ module "keycloak_config" {
 module "mariadb_config" {
   source = "./mariadb_config"
 }
+
+module "submarine_config" {
+  source = "./submarine_config"
+}
