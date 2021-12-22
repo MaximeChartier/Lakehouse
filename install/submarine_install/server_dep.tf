@@ -46,6 +46,16 @@ resource "kubernetes_deployment" "submarine_server" {
             value = "8080"
           }
 
+          env {
+            name  = "SUBMARINE_SERVER_PORT_8080_TCP"
+            value = "8080"
+          }
+
+          env {
+            name  = "K8S_APISERVER_URL"
+            value = "kubernetes.default.svc"
+          }
+
           volume_mount {
             name       = "config"
             read_only  = true

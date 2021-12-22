@@ -20,8 +20,6 @@ resource "kubernetes_job" "submarine_databases_init_metastore" {
         restart_policy = "Never"
       }
     }
-
-    ttl_seconds_after_finished = 10
   }
 }
 
@@ -47,8 +45,6 @@ resource "kubernetes_job" "submarine_databases_init_server" {
         restart_policy = "Never"
       }
     }
-
-    ttl_seconds_after_finished = 10
   }
 }
 
