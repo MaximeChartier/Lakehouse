@@ -35,3 +35,13 @@ module "keycloak_install" {
   source = "./keycloak_install"
   depends_on = [module.kube]
 }
+
+module "mariadb_install" {
+  source = "./mariadb_install"
+  depends_on = [module.kube]
+}
+
+module "submarine_install" {
+  source = "./submarine_install"
+  depends_on = [module.kube]
+}

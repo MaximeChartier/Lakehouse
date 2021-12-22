@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: submarine-server
+  namespace: submarine-core
+  labels:
+    app: submarine-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: submarine-server
+  template:
+    metadata:
+      labels:
+        app: submarine-server
+    spec:
+      containers:
+      - name: server
+        image: apache/submarine:server-0.6.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
