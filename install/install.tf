@@ -50,3 +50,8 @@ module "jupyterhub_install" {
   source = "./jupyterhub_install"
   depends_on = [module.kube]
 }
+
+module "spark_install" {
+  source = "./spark_install"
+  depends_on = [module.kube]
+}
