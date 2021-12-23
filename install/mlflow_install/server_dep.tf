@@ -28,7 +28,7 @@ resource "kubernetes_deployment" "mlflow_server" {
         container {
           name    = "server"
           image   = "apache/submarine:mlflow-0.6.0"
-          command = ["/bin/bash", "-c", "mlflow server --host 0.0.0.0 --backend-store-uri $${BACKEND_URI} --default-artifact-root $${DEFAULT_ARTIFACT_ROOT} --static-prefix $${STATIC_PREFIX}"]
+          command = ["/bin/bash", "-c", "mlflow server --host 0.0.0.0 --backend-store-uri $${BACKEND_URI} --default-artifact-root $${DEFAULT_ARTIFACT_ROOT}"]
 
           port {
             container_port = 5000
@@ -57,11 +57,6 @@ resource "kubernetes_deployment" "mlflow_server" {
           env {
             name  = "DEFAULT_ARTIFACT_ROOT"
             value = "s3://mlflow"
-          }
-
-          env {
-            name  = "STATIC_PREFIX"
-            value = "/mlflow"
           }
 
           image_pull_policy = "Always"

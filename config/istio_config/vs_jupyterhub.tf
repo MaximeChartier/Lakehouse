@@ -1,17 +1,17 @@
-resource "kubernetes_manifest" "virtualservice_submarine_core_submarine" {
+resource "kubernetes_manifest" "virtualservice_jupyterhub" {
   manifest = {
     "apiVersion" = "networking.istio.io/v1alpha3"
     "kind" = "VirtualService"
     "metadata" = {
-      "name" = "submarine"
-      "namespace" = "submarine-core"
+      "name" = "jupyterhub"
+      "namespace" = "jupyterhub"
     }
     "spec" = {
       "gateways" = [
         "istio-system/lakehouse-gateway",
       ]
       "hosts" = [
-        "subadmin.lakehouse.home",
+        "jupyterhub.lakehouse.home",
       ]
       "http" = [
         {
@@ -25,9 +25,9 @@ resource "kubernetes_manifest" "virtualservice_submarine_core_submarine" {
           "route" = [
             {
               "destination" = {
-                "host" = "submarine-server.submarine-core.svc.cluster.local"
+                "host" = "jupyterhub-proxy-public.jupyterhub.svc.cluster.local"
                 "port" = {
-                  "number" = 8080
+                  "number" = 80
                 }
               }
             },
