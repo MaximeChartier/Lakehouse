@@ -7,6 +7,6 @@ metadata:
     app: submarine-mlflow-service
 spec:
   type: ExternalName
-  externalName: mariadb.mariadb.svc.cluster.local
+  externalName: mlflow-server.mlflow.svc.cluster.local
   ports:
-  - port: 80
+  - port: 5000

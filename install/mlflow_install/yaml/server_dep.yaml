@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow-server
+  namespace: mlflow
+  labels:
+    app: mlflow-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow-server
+  template:
+    metadata:
+      labels:
+        app: mlflow-server
+    spec:
+      containers:
+      - name: server
+        image: apache/submarine:mlflow-0.6.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        command:
+        - /bin/bash 
+        - -c 
+        - "mlflow server --host 0.0.0.0 --backend-store-uri ${BACKEND_URI} --default-artifact-root ${DEFAULT_ARTIFACT_ROOT} --static-prefix ${STATIC_PREFIX}"
+        env:
+          - name: MLFLOW_S3_ENDPOINT_URL
+            value: "http://submarine-minio-service:9000"
+          - name: AWS_ACCESS_KEY_ID
+            value: "submarine_minio"
+          - name: AWS_SECRET_ACCESS_KEY
+            value: "submarine_minio"
+          - name: BACKEND_URI
+            value: "mysql+pymysql://root:admin@mariadb.mariadb.svc.cluster.local:3306/mlflow_db"
+          - name: DEFAULT_ARTIFACT_ROOT
+            value: "s3://mlflow"
+          - name: STATIC_PREFIX
+            value: "/mlflow"
+        limits:

@@ -41,7 +41,12 @@ module "mariadb_install" {
   depends_on = [module.kube]
 }
 
-module "submarine_install" {
-  source = "./submarine_install"
-  depends_on = [module.kube, module.mariadb_install]
+#module "submarine_install" {
+#  source = "./submarine_install"
+#  depends_on = [module.kube, module.mariadb_install]
+#}
+
+module "mlflow_install" {
+  source = "./mlflow_install"
+  depends_on = [module.kube]
 }
