@@ -698,7 +698,7 @@ proxy:
   ##
   containerSecurityContext:
     enabled: true
-    runAsUser: 1001
+    runAsUser: 1000
     runAsNonRoot: true
   ## Proxy pods' Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
@@ -707,7 +707,7 @@ proxy:
   ##
   podSecurityContext:
     enabled: true
-    fsGroup: 1001
+    fsGroup: 1000
   ## @param proxy.podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
   ##
@@ -1080,7 +1080,7 @@ imagePuller:
   ##
   containerSecurityContext:
     enabled: true
-    runAsUser: 1001
+    runAsUser: 1000
     runAsNonRoot: true
   ## imagePuller pods' Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
@@ -1089,7 +1089,7 @@ imagePuller:
   ##
   podSecurityContext:
     enabled: true
-    fsGroup: 1001
+    fsGroup: 1000
   ## @param imagePuller.podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
   ##
@@ -1215,8 +1215,8 @@ imagePuller:
 singleuser:
   image:
     registry: docker.io
-    repository: bitnami/jupyter-base-notebook
-    tag: 1.5.0-debian-10-r38
+    repository: jupyter/all-spark-notebook
+    tag: latest
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -1234,7 +1234,7 @@ singleuser:
   ## Command for running the container (set to default if not set). Use array form
   ## @param singleuser.command Override Single User default command
   ##
-  command: []
+  command: ["jupyter-labhub"]
   ## @param singleuser.tolerations Tolerations for pod assignment. Evaluated as a template.
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
@@ -1272,7 +1272,7 @@ singleuser:
   ##
   containerSecurityContext:
     enabled: true
-    runAsUser: 1001
+    runAsUser: 1000
   ## singleuser pods' Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param singleuser.podSecurityContext.enabled Enabled Single User pods' Security Context
@@ -1280,7 +1280,7 @@ singleuser:
   ##
   podSecurityContext:
     enabled: true
-    fsGroup: 1001
+    fsGroup: 1000
   ## @param singleuser.nodeSelector Node labels for pod assignment. Evaluated as a template.
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
