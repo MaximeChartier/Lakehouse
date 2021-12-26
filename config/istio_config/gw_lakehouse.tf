@@ -14,10 +14,7 @@ resource "kubernetes_manifest" "gateway_istio_system_lakehouse_gateway" {
         {
           "hosts" = [
             "lakehouse.home",
-            "auth.lakehouse.home",
-            "mlflow.lakehouse.home",
-            "jupyterhub.lakehouse.home",
-            "spark.lakehouse.home",
+            "*.lakehouse.home",
           ]
           "port" = {
             "name" = "http"
