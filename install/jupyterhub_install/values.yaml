@@ -152,6 +152,8 @@ hub:
           Authenticator:
             admin_users:
               - {{ .Values.hub.adminUser }}
+        KubeSpawner:
+          pod_connect_ip: jupyter-{username}.notebooks.jupyterhub.svc.cluster.local
       cookieSecret:
       concurrentSpawnLimit: 64
       consecutiveFailureLimit: 5

@@ -4,7 +4,7 @@ resource "kubernetes_manifest" "virtualservice_spark" {
     "kind" = "VirtualService"
     "metadata" = {
       "name" = "spark"
-      "namespace" = "spark"
+      "namespace" = "jupyterhub"
     }
     "spec" = {
       "gateways" = [
@@ -25,7 +25,7 @@ resource "kubernetes_manifest" "virtualservice_spark" {
           "route" = [
             {
               "destination" = {
-                "host" = "spark-master-svc.spark.svc.cluster.local"
+                "host" = "spark-master-svc.jupyterhub.svc.cluster.local"
                 "port" = {
                   "number" = 80
                 }

@@ -1,0 +1,497 @@
+body.metadata.annotations.hub\.jupyter.org\/username
+{
+    "type": "ADD",
+    "body": {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+            "annotations": {
+                "hub.jupyter.org/username": "users",
+                "kubectl.kubernetes.io/default-container": "notebook",
+                "kubectl.kubernetes.io/default-logs-container": "notebook",
+                "prometheus.io/path": "/stats/prometheus",
+                "prometheus.io/port": "15020",
+                "prometheus.io/scrape": "true",
+                "sidecar.istio.io/status": "{\"initContainers\":[\"istio-init\"],\"containers\":[\"istio-proxy\"],\"volumes\":[\"istio-envoy\",\"istio-data\",\"istio-podinfo\",\"istio-token\",\"istiod-ca-cert\"],\"imagePullSecrets\":null,\"revision\":\"default\"}"
+            },
+            "creationTimestamp": "2021-12-24T00:46:23Z",
+            "labels": {
+                "app": "jupyterhub",
+                "app.kubernetes.io/component": "singleuser",
+                "app.kubernetes.io/instance": "jupyterhub",
+                "app.kubernetes.io/managed-by": "Helm",
+                "app.kubernetes.io/name": "jupyterhub",
+                "chart": "jupyterhub-0.3.6",
+                "component": "singleuser-server",
+                "helm.sh/chart": "jupyterhub-0.3.6",
+                "heritage": "jupyterhub",
+                "hub.jupyter.org/network-access-hub": "true",
+                "hub.jupyter.org/servername": "",
+                "hub.jupyter.org/username": "users",
+                "release": "jupyterhub",
+                "security.istio.io/tlsMode": "istio",
+                "service.istio.io/canonical-name": "jupyterhub",
+                "service.istio.io/canonical-revision": "latest"
+            },
+            "name": "jupyterhub-jupyter-users",
+            "namespace": "jupyterhub",
+            "resourceVersion": "168914",
+            "selfLink": "/api/v1/namespaces/jupyterhub/pods/jupyterhub-jupyter-users",
+            "uid": "6bdc7949-aeae-4bd5-b1e2-913138a633fa"
+        },
+        "spec": {
+            "containers": [
+                {
+                    "args": [
+                        "jupyter-labhub",
+                        "--ip=0.0.0.0",
+                        "--port=8888",
+                        "--notebook-dir=/opt/bitnami/jupyterhub-singleuser"
+                    ],
+                    "env": [
+                        {
+                            "name": "JPY_API_TOKEN",
+                            "value": "2ebc9fc86ec3485f94e67a0a69d0f026"
+                        },
+                        {
+                            "name": "JUPYTERHUB_ACTIVITY_URL",
+                            "value": "http://jupyterhub-hub:8081/hub/api/users/users/activity"
+                        },
+                        {
+                            "name": "JUPYTERHUB_ADMIN_ACCESS",
+                            "value": "1"
+                        },
+                        {
+                            "name": "JUPYTERHUB_API_TOKEN",
+                            "value": "2ebc9fc86ec3485f94e67a0a69d0f026"
+                        },
+                        {
+                            "name": "JUPYTERHUB_API_URL",
+                            "value": "http://jupyterhub-hub:8081/hub/api"
+                        },
+                        {
+                            "name": "JUPYTERHUB_BASE_URL",
+                            "value": "/"
+                        },
+                        {
+                            "name": "JUPYTERHUB_CLIENT_ID",
+                            "value": "jupyterhub-user-users"
+                        },
+                        {
+                            "name": "JUPYTERHUB_HOST"
+                        },
+                        {
+                            "name": "JUPYTERHUB_OAUTH_CALLBACK_URL",
+                            "value": "/user/users/oauth_callback"
+                        },
+                        {
+                            "name": "JUPYTERHUB_SERVER_NAME"
+                        },
+                        {
+                            "name": "JUPYTERHUB_SERVICE_PREFIX",
+                            "value": "/user/users/"
+                        },
+                        {
+                            "name": "JUPYTERHUB_USER",
+                            "value": "users"
+                        },
+                        {
+                            "name": "JUPYTER_IMAGE",
+                            "value": "docker.io/jupyter/all-spark-notebook:latest"
+                        },
+                        {
+                            "name": "JUPYTER_IMAGE_SPEC",
+                            "value": "docker.io/jupyter/all-spark-notebook:latest"
+                        }
+                    ],
+                    "image": "docker.io/jupyter/all-spark-notebook:latest",
+                    "imagePullPolicy": "IfNotPresent",
+                    "lifecycle": {},
+                    "name": "notebook",
+                    "ports": [
+                        {
+                            "containerPort": 8888,
+                            "name": "notebook-port",
+                            "protocol": "TCP"
+                        }
+                    ],
+                    "resources": {},
+                    "securityContext": {
+                        "runAsUser": 1000
+                    },
+                    "terminationMessagePath": "/dev/termination-log",
+                    "terminationMessagePolicy": "File",
+                    "volumeMounts": [
+                        {
+                            "mountPath": "/opt/bitnami/jupyterhub-singleuser",
+                            "name": "jupyterhub-volume-users"
+                        },
+                        {
+                            "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                            "name": "jupyterhub-singleuser-token-9cc8b",
+                            "readOnly": true
+                        }
+                    ]
+                },
+                {
+                    "args": [
+                        "proxy",
+                        "sidecar",
+                        "--domain",
+                        "$(POD_NAMESPACE).svc.cluster.local",
+                        "--proxyLogLevel=warning",
+                        "--proxyComponentLogLevel=misc:error",
+                        "--log_output_level=default:info",
+                        "--concurrency",
+                        "2"
+                    ],
+                    "env": [
+                        {
+                            "name": "JWT_POLICY",
+                            "value": "third-party-jwt"
+                        },
+                        {
+                            "name": "PILOT_CERT_PROVIDER",
+                            "value": "istiod"
+                        },
+                        {
+                            "name": "CA_ADDR",
+                            "value": "istiod.istio-system.svc:15012"
+                        },
+                        {
+                            "name": "POD_NAME",
+                            "valueFrom": {
+                                "fieldRef": {
+                                    "apiVersion": "v1",
+                                    "fieldPath": "metadata.name"
+                                }
+                            }
+                        },
+                        {
+                            "name": "POD_NAMESPACE",
+                            "valueFrom": {
+                                "fieldRef": {
+                                    "apiVersion": "v1",
+                                    "fieldPath": "metadata.namespace"
+                                }
+                            }
+                        },
+                        {
+                            "name": "INSTANCE_IP",
+                            "valueFrom": {
+                                "fieldRef": {
+                                    "apiVersion": "v1",
+                                    "fieldPath": "status.podIP"
+                                }
+                            }
+                        },
+                        {
+                            "name": "SERVICE_ACCOUNT",
+                            "valueFrom": {
+                                "fieldRef": {
+                                    "apiVersion": "v1",
+                                    "fieldPath": "spec.serviceAccountName"
+                                }
+                            }
+                        },
+                        {
+                            "name": "HOST_IP",
+                            "valueFrom": {
+                                "fieldRef": {
+                                    "apiVersion": "v1",
+                                    "fieldPath": "status.hostIP"
+                                }
+                            }
+                        },
+                        {
+                            "name": "PROXY_CONFIG",
+                            "value": "{}\n"
+                        },
+                        {
+                            "name": "ISTIO_META_POD_PORTS",
+                            "value": "[\n    {\"name\":\"notebook-port\",\"containerPort\":8888,\"protocol\":\"TCP\"}\n]"
+                        },
+                        {
+                            "name": "ISTIO_META_APP_CONTAINERS",
+                            "value": "notebook"
+                        },
+                        {
+                            "name": "ISTIO_META_CLUSTER_ID",
+                            "value": "Kubernetes"
+                        },
+                        {
+                            "name": "ISTIO_META_INTERCEPTION_MODE",
+                            "value": "REDIRECT"
+                        },
+                        {
+                            "name": "ISTIO_META_WORKLOAD_NAME",
+                            "value": "jupyterhub-jupyter-users"
+                        },
+                        {
+                            "name": "ISTIO_META_OWNER",
+                            "value": "kubernetes://apis/v1/namespaces/jupyterhub/pods/jupyterhub-jupyter-users"
+                        },
+                        {
+                            "name": "ISTIO_META_MESH_ID",
+                            "value": "cluster.local"
+                        },
+                        {
+                            "name": "TRUST_DOMAIN",
+                            "value": "cluster.local"
+                        }
+                    ],
+                    "image": "docker.io/istio/proxyv2:1.12.0",
+                    "imagePullPolicy": "IfNotPresent",
+                    "name": "istio-proxy",
+                    "ports": [
+                        {
+                            "containerPort": 15090,
+                            "name": "http-envoy-prom",
+                            "protocol": "TCP"
+                        }
+                    ],
+                    "readinessProbe": {
+                        "failureThreshold": 30,
+                        "httpGet": {
+                            "path": "/healthz/ready",
+                            "port": 15021,
+                            "scheme": "HTTP"
+                        },
+                        "initialDelaySeconds": 1,
+                        "periodSeconds": 2,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 3
+                    },
+                    "resources": {
+                        "limits": {
+                            "cpu": "2",
+                            "memory": "1Gi"
+                        },
+                        "requests": {
+                            "cpu": "100m",
+                            "memory": "128Mi"
+                        }
+                    },
+                    "securityContext": {
+                        "allowPrivilegeEscalation": false,
+                        "capabilities": {
+                            "drop": [
+                                "ALL"
+                            ]
+                        },
+                        "privileged": false,
+                        "readOnlyRootFilesystem": true,
+                        "runAsGroup": 1337,
+                        "runAsNonRoot": true,
+                        "runAsUser": 1337
+                    },
+                    "terminationMessagePath": "/dev/termination-log",
+                    "terminationMessagePolicy": "File",
+                    "volumeMounts": [
+                        {
+                            "mountPath": "/var/run/secrets/istio",
+                            "name": "istiod-ca-cert"
+                        },
+                        {
+                            "mountPath": "/var/lib/istio/data",
+                            "name": "istio-data"
+                        },
+                        {
+                            "mountPath": "/etc/istio/proxy",
+                            "name": "istio-envoy"
+                        },
+                        {
+                            "mountPath": "/var/run/secrets/tokens",
+                            "name": "istio-token"
+                        },
+                        {
+                            "mountPath": "/etc/istio/pod",
+                            "name": "istio-podinfo"
+                        },
+                        {
+                            "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                            "name": "jupyterhub-singleuser-token-9cc8b",
+                            "readOnly": true
+                        }
+                    ]
+                }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "enableServiceLinks": true,
+            "initContainers": [
+                {
+                    "args": [
+                        "istio-iptables",
+                        "-p",
+                        "15001",
+                        "-z",
+                        "15006",
+                        "-u",
+                        "1337",
+                        "-m",
+                        "REDIRECT",
+                        "-i",
+                        "*",
+                        "-x",
+                        "",
+                        "-b",
+                        "*",
+                        "-d",
+                        "15090,15021,15020"
+                    ],
+                    "image": "docker.io/istio/proxyv2:1.12.0",
+                    "imagePullPolicy": "IfNotPresent",
+                    "name": "istio-init",
+                    "resources": {
+                        "limits": {
+                            "cpu": "2",
+                            "memory": "1Gi"
+                        },
+                        "requests": {
+                            "cpu": "100m",
+                            "memory": "128Mi"
+                        }
+                    },
+                    "securityContext": {
+                        "allowPrivilegeEscalation": false,
+                        "capabilities": {
+                            "add": [
+                                "NET_ADMIN",
+                                "NET_RAW"
+                            ],
+                            "drop": [
+                                "ALL"
+                            ]
+                        },
+                        "privileged": false,
+                        "readOnlyRootFilesystem": false,
+                        "runAsGroup": 0,
+                        "runAsNonRoot": false,
+                        "runAsUser": 0
+                    },
+                    "terminationMessagePath": "/dev/termination-log",
+                    "terminationMessagePolicy": "File",
+                    "volumeMounts": [
+                        {
+                            "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                            "name": "jupyterhub-singleuser-token-9cc8b",
+                            "readOnly": true
+                        }
+                    ]
+                }
+            ],
+            "priority": 0,
+            "restartPolicy": "OnFailure",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+                "fsGroup": 1337
+            },
+            "serviceAccount": "jupyterhub-singleuser",
+            "serviceAccountName": "jupyterhub-singleuser",
+            "terminationGracePeriodSeconds": 30,
+            "tolerations": [
+                {
+                    "effect": "NoSchedule",
+                    "key": "hub.jupyter.org/dedicated",
+                    "operator": "Equal",
+                    "value": "user"
+                },
+                {
+                    "effect": "NoSchedule",
+                    "key": "hub.jupyter.org_dedicated",
+                    "operator": "Equal",
+                    "value": "user"
+                },
+                {
+                    "effect": "NoExecute",
+                    "key": "node.kubernetes.io/not-ready",
+                    "operator": "Exists",
+                    "tolerationSeconds": 300
+                },
+                {
+                    "effect": "NoExecute",
+                    "key": "node.kubernetes.io/unreachable",
+                    "operator": "Exists",
+                    "tolerationSeconds": 300
+                }
+            ],
+            "volumes": [
+                {
+                    "emptyDir": {
+                        "medium": "Memory"
+                    },
+                    "name": "istio-envoy"
+                },
+                {
+                    "emptyDir": {},
+                    "name": "istio-data"
+                },
+                {
+                    "downwardAPI": {
+                        "defaultMode": 420,
+                        "items": [
+                            {
+                                "fieldRef": {
+                                    "apiVersion": "v1",
+                                    "fieldPath": "metadata.labels"
+                                },
+                                "path": "labels"
+                            },
+                            {
+                                "fieldRef": {
+                                    "apiVersion": "v1",
+                                    "fieldPath": "metadata.annotations"
+                                },
+                                "path": "annotations"
+                            }
+                        ]
+                    },
+                    "name": "istio-podinfo"
+                },
+                {
+                    "name": "istio-token",
+                    "projected": {
+                        "defaultMode": 420,
+                        "sources": [
+                            {
+                                "serviceAccountToken": {
+                                    "audience": "istio-ca",
+                                    "expirationSeconds": 43200,
+                                    "path": "istio-token"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "configMap": {
+                        "defaultMode": 420,
+                        "name": "istio-ca-root-cert"
+                    },
+                    "name": "istiod-ca-cert"
+                },
+                {
+                    "name": "jupyterhub-volume-users",
+                    "persistentVolumeClaim": {
+                        "claimName": "jupyterhub-claim-users"
+                    }
+                },
+                {
+                    "name": "jupyterhub-singleuser-token-9cc8b",
+                    "secret": {
+                        "defaultMode": 420,
+                        "secretName": "jupyterhub-singleuser-token-9cc8b"
+                    }
+                }
+            ]
+        },
+        "status": {
+            "phase": "Pending",
+            "qosClass": "Burstable"
+        }
+    },
+    "oldBody": null,
+    "group": "",
+    "version": "v1",
+    "resource": "pods"
+}
