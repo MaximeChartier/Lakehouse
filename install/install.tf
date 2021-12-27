@@ -28,30 +28,35 @@ module "istio_install" {
 
 module "ldap_install" {
   source = "./ldap_install"
-  depends_on = [module.kube]
+  depends_on = [module.istio_install]
 }
 
 module "keycloak_install" {
   source = "./keycloak_install"
-  depends_on = [module.kube]
+  depends_on = [module.ldap_install]
 }
 
 module "mariadb_install" {
   source = "./mariadb_install"
-  depends_on = [module.kube]
+  depends_on = [module.istio_install]
 }
 
 module "mlflow_install" {
   source = "./mlflow_install"
-  depends_on = [module.kube]
+  depends_on = [module.mariadb_install]
 }
 
 module "jupyterhub_install" {
   source = "./jupyterhub_install"
-  depends_on = [module.kube]
+  depends_on = [module.mariadb_install]
 }
 
 module "spark_install" {
   source = "./spark_install"
-  depends_on = [module.kube]
+  depends_on = [module.istio_install]
+}
+
+module "argo_events_install" {
+  source = "./argo_events_install"
+  depends_on = [module.istio_install]
 }

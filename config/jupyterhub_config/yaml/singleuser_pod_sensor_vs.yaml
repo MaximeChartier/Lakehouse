@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
   name: create-virutal-service-on-labpod
-  namespace: jupyterhub
+  namespace: argo-events
 spec:
   template:
     serviceAccountName: argo-events-sa
@@ -21,9 +21,10 @@ spec:
               kind: VirtualService
               metadata:
                 name: lab-vs-
+                namespace: jupyterhub
               spec:
                 hosts:
-                  - .lab.lakehouse.home
+                  - .sparkui.lakehouse.home
                 gateways:
                   - istio-system/lakehouse-gateway
                 http:
@@ -32,9 +33,9 @@ spec:
                           prefix: /
                     route:
                       - destination:
-                          host: lab-
+                          host: -lab.jupyterhub.svc.cluster.local
                           port:
-                            number: 8888
+                            number: 4040
       parameters:
         - src:
             dependencyName: test-dep
@@ -50,4 +51,4 @@ spec:
             dependencyName: test-dep
             dataKey: body.metadata.annotations.hub\.jupyter\.org\/username
           dest: k8s.source.resource.spec.http.0.route.0.destination.host
-          operation: append
+          operation: prepend

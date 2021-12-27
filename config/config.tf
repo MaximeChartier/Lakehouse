@@ -10,7 +10,6 @@ terraform {
 # sudo -E kubectl port-forward service/keycloak -n keycloak 8443:80
 # sudo -E kubectl port-forward service/openldap-openldap-stack-ha -n ldap 389:389
 # sudo -E kubectl port-forward service/mariadb -n mariadb 3306:3306
-# sudo -E kubectl port-forward service/mariadb -n mariadb 3306:3306
 
 provider "kubernetes" {
   config_path    = "~/.kube/config"
@@ -32,4 +31,8 @@ module "keycloak_config" {
 
 module "mariadb_config" {
   source = "./mariadb_config"
+}
+
+module "jupyterhub_config" {
+  source = "./jupyterhub_config"
 }

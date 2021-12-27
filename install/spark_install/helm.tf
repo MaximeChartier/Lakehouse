@@ -4,7 +4,7 @@ resource "helm_release" "spark" {
   chart       = "spark"
   version     = "5.7.13"
   timeout     = 1000
-  namespace   = "jupyterhub"
+  namespace   = "spark"
 
   values = [
     "${file("${path.module}/values.yaml")}"

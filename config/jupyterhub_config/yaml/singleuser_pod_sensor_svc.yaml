@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Sensor
 metadata:
   name: create-service-on-labpod
-  namespace: jupyterhub
+  namespace: argo-events
 spec:
   template:
     serviceAccountName: argo-events-sa
@@ -20,13 +20,12 @@ spec:
               apiVersion: v1
               kind: Service
               metadata:
-                name: lab-
+                name: -lab
+                namespace: jupyterhub
               spec:
                 ports:
-                - port: 8888
-                  name: http
                 - port: 4040
-                  name: sparkui
+                  name: http
                 selector:
                   hub.jupyter.org/username: default
       parameters:
@@ -38,4 +37,4 @@ spec:
             dependencyName: test-dep
             dataKey: body.metadata.annotations.hub\.jupyter\.org\/username
           dest: k8s.source.resource.metadata.name
-          operation: append
+          operation: prepend

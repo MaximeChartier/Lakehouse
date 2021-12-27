@@ -152,8 +152,6 @@ hub:
           Authenticator:
             admin_users:
               - {{ .Values.hub.adminUser }}
-        KubeSpawner:
-          pod_connect_ip: jupyter-{username}.notebooks.jupyterhub.svc.cluster.local
       cookieSecret:
       concurrentSpawnLimit: 64
       consecutiveFailureLimit: 5
@@ -1043,7 +1041,7 @@ proxy:
 imagePuller:
   ## @param imagePuller.enabled Deploy ImagePuller daemonset
   ##
-  enabled: true
+  enabled: false
   ## @param imagePuller.command Override ImagePuller default command
   ##
   command: []
@@ -1384,7 +1382,7 @@ singleuser:
   networkPolicy:
     ## @param singleuser.networkPolicy.enabled Deploy Single User network policies
     ##
-    enabled: true
+    enabled: false
     ## @param singleuser.networkPolicy.allowInterspaceAccess Allow communication between pods in different namespaces
     ##
     allowInterspaceAccess: true
