@@ -15,6 +15,7 @@ variable password {
 
 provider "ldap" {
   ldap_host     = "localhost"
+  ldap_port     = 8389
   bind_user     = "cn=admin,dc=lakehouse,dc=home"
   bind_password = "${var.password}"
 }

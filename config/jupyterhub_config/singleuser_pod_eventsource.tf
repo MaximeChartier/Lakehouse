@@ -1,4 +1,11 @@
 resource "kubernetes_manifest" "eventsource_argo_events_resource" {
+  computed_fields = ["metadata.finalizers", "metadata.annotations", "metadata.labels"]
+
+  field_manager {
+    name = "myteam"
+    force_conflicts = true
+  }
+
   manifest = {
     "apiVersion" = "argoproj.io/v1alpha1"
     "kind" = "EventSource"

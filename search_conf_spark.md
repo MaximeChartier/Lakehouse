@@ -40,3 +40,5 @@ spark = SparkSession.builder \
         .getOrCreate()
 
 spark.range(1,9).collect()
+
+spark.stop()

@@ -15,3 +15,23 @@ Voici la liste des composants disponible aprés installation :
     - **Apache Spark** : Unified engine for large-scale data analytics
     - **JupyterHub** : "the best way to serve Jupyter notebook for multiple users"
     - **JupyterLab** (par utilisateur) : A Next-Generation Notebook Interface
+
+## Installation
+
+Assurez-vous que `kubectl` est correctement configuré.
+```bash
+terragrunt run-all apply
+```
+
+## Backlog
+
+- Installer et configurer Minio
+- Configurer Mlflow pour stocker les modèles dans un bucket S3
+- Configurer JupyterHub pour déléguer l'authentification a Keycloak
+- Configurer Spark pour intéragir avec le S3
+- Sécuriser l'accès au Spark master
+- Automatiser la configuration des drivers Spark dans les singleusers pods
+- Sécuriser l'accès aux routes {username}.sparkui.lakehouse.home
+- Supprimer les Services et VirtualService généré après l'arrêts des pods JupyterLab
+- Mettre en place un proxy pip et un proxy docker
+- Rendre le nom de domaine racine dynamic "lakehouse.home"
