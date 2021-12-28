@@ -1,7 +1,0 @@
-kubectl run sub -i --tty --image=docker.io/jupyter/all-spark-notebook:latest --overrides='{ "apiVersion": "v1", "spec": { "template": { "spec": { "nodeSelector": { "kubernetes.io/hostname": "kube2" } } } } }' -- /bin/bash
-
-!pip install pyspark
-from pyspark.sql import SparkSession
-spark = SparkSession.builder\
-        .appName('testspark')\
-        .getOrCreate()

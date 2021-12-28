@@ -25,7 +25,11 @@ spec:
               spec:
                 ports:
                 - port: 4040
-                  name: http
+                  name: http-sparkui
+                - port: 6060
+                  name: tcp-blockmanager
+                - port: 2020
+                  name: tcp-driver
                 selector:
                   hub.jupyter.org/username: default
       parameters:

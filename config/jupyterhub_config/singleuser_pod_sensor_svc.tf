@@ -50,8 +50,16 @@ resource "kubernetes_manifest" "sensor_argo_events_create_service_on_labpod" {
                   "spec" = {
                     "ports" = [
                       {
-                        "name" = "http"
+                        "name" = "http-sparkui"
                         "port" = 4040
+                      },
+                      {
+                        "name" = "tcp-blockmanager"
+                        "port" = 6060
+                      },
+                      {
+                        "name" = "tcp-driver"
+                        "port" = 2020
                       },
                     ]
                     "selector" = {
