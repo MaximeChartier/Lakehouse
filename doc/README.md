@@ -1,86 +1,32 @@
-# Préparation d'un environnement de test
+# Documentation
 
-## Prérequis
- - Avoir une clé SSH RSA nommée "id_rsa.pub"
+## Installer un cluster Kubernetes de test en local 
 
-## Installation de Libvirt
+**Méthode 1**
 
-```bash
-sudo apt update
-sudo apt install qemu libvirt-daemon-
-# utile pour installer le plugin Vagrant
-sudo apt install libvirt-dev
-#Décommenter la ligne -> unix_sock_group = "libvirt"
-#Décommenter la ligne -> unix_sock_rw_perms = "0770"
-sudo vi /etc/libvirt/libvirtd.conf
-#Redémarrage du service libvirt
-sudo systemctl restart libvirtd.service
-```
+Utiliser Minikube (pas testé)
 
-## Installation Vagrant
+**Méthode 2**
+
+Suivre ce [tuto](kube_local_cluster.md)
+
+## Installer le Lakehouse
 
 ```bash
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt update
-sudo apt install vagrant
+terragrunt run-all apply
 ```
+Votre DNS doit résoudre **\*.lakehouse.home** par l'IP externe de l'Ingress Istio.
 
-## Installation du krew (plugin kubectl)
-
-https://krew.sigs.k8s.io/docs/user-guide/setup/install/
-
-## Installation du plugin libvirt pour Vagrant
-
+Aide : avec **dnsmasq**
 ```bash
-vagrant plugin install vagrant-libvirt
+#cat /etc/NetworkManager/dnsmasq.d/lakehouse
+address=/lakehouse.home/192.168.121.235
+address=/*.lakehouse.home/192.168.121.235
 ```
 
-## Téléchargement de l'image Alpine pour Libvirt
+## Utiliser le Lakehouse
 
-```bash
-vagrant box add generic/debian10 --provider=libvirt
-```
-
-## Installation Ansible
-
-```bash
-#Installation de ansible dans un environnement Conda
-conda create -n ansible
-conda activate ansible
-conda install python==3.9.7
-pip install ansible
-```
-
-## Création de 3 VM en local (avec Vagrant)
-
-```bash
-vagrant up
-```
-
-# Provisionning de l'environnement
-
-## Installation de Kubernetes
-
-```bash
-#Provisionning
-ansible-playbook kubernetes/site.yml -i kubernetes/inventory/vagrant/hosts.ini
-#Récupération de la conf pour la connexion au cluster
-scp root@192.168.50.11:~/.kube/config ~/.kube/config_ll
-```
-
-## Installation des composants du Datalake
-
-```
-cd install
-terraform init
-terrafom apply
-```
-
-## Configuration des composants du Datalake
-
-```
-cd config
-terraform init
-terrafom apply
-```
+- [Démarrer un notebook](experiences/ex1_start_lab.md)
+- [Convertir un fichier CSV en ORC et en Parquet](experiences/ex2_csv_orc_parquet.md)
+- Entraîner un modèle avec Spark et le sauvegarder dans MlFlow (en cours)
+- Entraîner un modèle avec Kubeflow et le sauvegarder dans MlFlow (en cours)
