@@ -1,5 +1,7 @@
 # Lakehouse
 
+[Documentation](doc/README.md)
+
 Ce répo est un outil permettant l'installation et la configuration d'un environnement Datalake basé sur Kubernetes.
 Voici la liste des composants disponible aprés installation :
 - **Infrastructure**
