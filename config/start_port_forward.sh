@@ -9,6 +9,8 @@ kubectl port-forward service/mariadb -n mariadb 3306:3306 > /dev/null &
 echo $! > pid_mariadb.bak
 kubectl port-forward service/keycloak -n keycloak 8443:80 > /dev/null &
 echo $! > pid_keycloak.bak
+kubectl port-forward service/minio -n minio 9000:9000 > /dev/null &
+echo $! > pid_minio.bak
 
 sleep 1
 

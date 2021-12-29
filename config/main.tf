@@ -37,3 +37,7 @@ module "mariadb_config" {
 module "jupyterhub_config" {
   source = "./jupyterhub_config"
 }
+
+module "minio_config" {
+  source = "./minio_config"
+}

@@ -25,7 +25,6 @@ terragrunt run-all apply
 
 ## Backlog
 
-- Installer et configurer Minio
 - Configurer Mlflow pour stocker les modèles dans un bucket S3
 - Configurer JupyterHub pour déléguer l'authentification a Keycloak
 - Configurer Spark pour intéragir avec le S3
