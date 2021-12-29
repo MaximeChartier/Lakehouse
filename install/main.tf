@@ -61,3 +61,8 @@ module "argo_events_install" {
   source = "./argo_events_install"
   depends_on = [module.istio_install]
 }
+
+module "minio_install" {
+  source = "./minio_install"
+  depends_on = [module.istio_install]
+}
