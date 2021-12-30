@@ -448,7 +448,7 @@ worker:
   autoscaling:
     ## @param worker.autoscaling.enabled Enable replica autoscaling depending on CPU
     ##
-    enabled: false
+    enabled: true
     ## @param worker.autoscaling.CpuTargetPercentage Kubernetes HPA CPU target percentage
     ##
     CpuTargetPercentage: 50
