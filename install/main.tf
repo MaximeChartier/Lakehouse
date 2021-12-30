@@ -66,3 +66,13 @@ module "minio_install" {
   source = "./minio_install"
   depends_on = [module.istio_install]
 }
+
+module "kafka_install" {
+  source = "./kafka_install"
+  depends_on = [module.istio_install]
+}
+
+module "logstash_install" {
+  source = "./logstash_install"
+  depends_on = [module.istio_install]
+}
