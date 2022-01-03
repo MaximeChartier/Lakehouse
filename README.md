@@ -28,7 +28,6 @@ terragrunt run-all apply
 ## Backlog
 
 - Configurer Mlflow pour stocker les modèles dans un bucket S3
-- Configurer JupyterHub pour déléguer l'authentification a Keycloak
 - Sécuriser l'accès au Spark master
 - Installer Kubeflow
 - Automatiser la configuration des drivers Spark dans les singleusers pods

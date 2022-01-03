@@ -139,19 +139,21 @@ hub:
       Service: {{ .Release.Service }}
     hub:
       config:
+        GenericOAuthenticator:
+          client_id: jupyterhub
+          client_secret: f86ed21b-1843-4479-be3d-dc3402cbbebb
+          oauth_callback_url: http://jupyterhub.lakehouse.home/hub/oauth_callback
+          authorize_url: http://auth.lakehouse.home/auth/realms/lakehouse/protocol/openid-connect/auth
+          token_url: http://auth.lakehouse.home/auth/realms/lakehouse/protocol/openid-connect/token
+          userdata_url: http://auth.lakehouse.home/auth/realms/lakehouse/protocol/openid-connect/userinfo
+          login_service: keycloak
+          username_key: preferred_username
+          userdata_params:
+            state: state
         JupyterHub:
           admin_access: true
-          authenticator_class: dummy
+          authenticator_class: generic-oauth
           cookie_secret_file: /tmp/jupyterhub_cookie_secret
-          DummyAuthenticator:
-          {{- if .Values.hub.password }}
-            password: {{ .Values.hub.password | quote }}
-          {{- else }}
-            password: {{ randAlphaNum 10 | quote }}
-          {{- end }}
-          Authenticator:
-            admin_users:
-              - {{ .Values.hub.adminUser }}
       cookieSecret:
       concurrentSpawnLimit: 64
       consecutiveFailureLimit: 5
@@ -338,7 +340,7 @@ hub:
   ##
   podSecurityContext:
     enabled: true
-    fsGroup: 1001
+    fsGroup: 1000
   ## Pod affinity preset
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
   ## Allowed values: soft, hard
@@ -422,10 +424,16 @@ hub:
   extraEnvVarsSecret: ""
   ## @param hub.extraVolumes Optionally specify extra list of additional volumes for Hub pods
   ##
-  extraVolumes: []
+  extraVolumes:
+    - name: dns-config
+      configMap:
+        name: dns-config
   ## @param hub.extraVolumeMounts Optionally specify extra list of additional volumeMounts for Hub container(s)
   ##
-  extraVolumeMounts: []
+  extraVolumeMounts:
+    - mountPath: /etc/resolv.conf
+      name: dns-config
+      subPath: resolv.conf
   ## @param hub.initContainers Add additional init containers to the Hub pods
   ## Example:
   ## initContainers:
@@ -447,7 +455,19 @@ hub:
   ##       - name: portname
   ##         containerPort: 1234
   ##
-  sidecars: []
+  sidecars:
+    - name: dns
+      image: rancher/coredns-coredns:1.6.3
+      imagePullPolicy: Always
+      args: [ "-conf", "/etc/coredns/Corefile" ]
+      ports:
+        - name: dns
+          containerPort: 53
+          protocol: UDP
+      volumeMounts:
+        - mountPath: /etc/coredns/Corefile
+          subPath: Corefile
+          name: dns-config
 
   ## @section Hub RBAC parameters
 
