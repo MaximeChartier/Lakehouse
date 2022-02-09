@@ -4,7 +4,7 @@ resource "ldap_object" "user_max001" {
   attributes = [
     { sn = "Chartier" },
     { givenName = "Maxime" },
-    { mail = "maxime.chartier.micro@gmail.com" },
+    { mail = "contact@veryloop.fr" },
     { userPassword = "max001" }
   ]
 }

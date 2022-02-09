@@ -2,14 +2,7 @@
 
 Rendez vous sur l'url http://jupyterhub.lakehouse.home/
 
-![](images/ex1_hub_login.png)
-
-*JupyterHub n'est pas encore paramétré pour utiliser l'OpenID de Keycloak, c'est donc un mot de passe généric qui est utilisé.*
-
-Aide : récupérer le mot de passe DummyAuthenticator de JupyterHub 
-```bash
-kubectl get secret/jupyterhub-hub -n jupyterhub -o 'go-template={{index .data "values.yaml" | base64decode | }}' | grep password
-```
+L'utilisateur est redirigé vers l'interface de keycloak. On utilise un des utilisateurs déclaré dans le LDAP pour s'authentifier.
 
 Après authentification, un serveur JupyterLab démarre.
 
